@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 class MovieDetailViewModel {
         
     private var service = Webservice()
@@ -27,17 +28,15 @@ class MovieDetailViewModel {
             let detail = await service.fetchMovies(resource: resource)
             switch detail {
             case .success(let detail):
-                DispatchQueue.main.async {
-                    self.details = detail
-                    self.generateGenres(genres: self.details?.genres)
-                    self.generateStars(voteAverage: self.details!.voteAverage)
-                    self.voteAverage = "\(String(format: "%.1f", self.details?.voteAverage as! CVarArg))/10"
-                    completion()
-                }
+                self.details = detail
+                self.generateGenres(genres: self.details?.genres)
+                self.generateStars(voteAverage: self.details!.voteAverage)
+                self.voteAverage = "\(String(format: "%.1f", self.details?.voteAverage as! CVarArg))/10"
+                completion()
             case .failure(let error):
                 print(error)
             }
-        }        
+        }
     }
     
     private func generateGenres(genres: [Genre]?) {

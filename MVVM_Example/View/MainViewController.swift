@@ -43,20 +43,14 @@ class MainViewController: UIViewController {
     }
     
     @objc private func loadCoreData() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            CoreDataManager.shared.loadData { dataModel in
-                self.coreDataListModel = dataModel
-            }
+        CoreDataManager.shared.loadData { dataModel in
+            self.coreDataListModel = dataModel
         }
     }
     
     private func loadData() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.movieListVM.loadMovieList {
-                self.movieCollectionView.reloadData()
-            }
+        self.movieListVM.loadMovieList {
+            self.movieCollectionView.reloadData()
         }
     }
     

@@ -129,19 +129,18 @@ class DetailViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
     func loadData(id: Int) {
-        DispatchQueue.main.async {
-            self.detailVM.loadMovieDetails(id: id) {
-                self.runtimeLabel.text = "\(String(self.detailVM.details?.runtime ?? 0)) min."
-                self.genresLabel.text = self.detailVM.genreString
-                self .generateStarImages(self.detailVM.starImageArray)
-                self.ratingLabel.text = self.detailVM.voteAverage
-                self.overviewLabel.text = self.detailVM.details?.overview
-                self.websiteUrl = self.detailVM.details?.homepage
-                self.movieTitle = self.detailVM.details?.title ?? "No Title"
-                self.movieId = self.detailVM.details?.id ?? 0
-            }
+        self.detailVM.loadMovieDetails(id: id) {
+            self.runtimeLabel.text = "\(String(self.detailVM.details?.runtime ?? 0)) min."
+            self.genresLabel.text = self.detailVM.genreString
+            self .generateStarImages(self.detailVM.starImageArray)
+            self.ratingLabel.text = self.detailVM.voteAverage
+            self.overviewLabel.text = self.detailVM.details?.overview
+            self.websiteUrl = self.detailVM.details?.homepage
+            self.movieTitle = self.detailVM.details?.title ?? "No Title"
+            self.movieId = self.detailVM.details?.id ?? 0
         }
     }
+    
     private func generateStarImages(_ starImages: [UIImage]) {
         self.firstStarImageView.image = starImages[0]
         self.secondStarImageView.image = starImages[1]
@@ -150,12 +149,11 @@ class DetailViewController: UIViewController {
         self.fifthStarImageView.image = starImages[4]
     }
     public func loadImage(backImageUrl: String?) {
-        DispatchQueue.main.async { [weak self] in
-            guard let imageUrl = backImageUrl else { return }
-            let url = URL(string: imageUrl)
-            self?.detailImageView.downloaded(from: url!)
-        }
+        guard let imageUrl = backImageUrl else { return }
+        let url = URL(string: imageUrl)
+        detailImageView.downloaded(from: url!)
     }
+    
     @objc private func handleFavButton() {
         let starFill = UIImage(systemName: "star.fill")
         

@@ -7,6 +7,7 @@
 
 import UIKit
 
+@MainActor
 class MovieListViewModel {
     
     private let service = Webservice()
@@ -22,10 +23,8 @@ class MovieListViewModel {
             let movies = await service.fetchMovies(resource: resource)
             switch movies {
             case .success(let movies):
-                DispatchQueue.main.async {
-                    self.movies = movies
-                    completion()
-                }
+                self.movies = movies
+                completion()
             case .failure(let error):
                 print(error)
             }
