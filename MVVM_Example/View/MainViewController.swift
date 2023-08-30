@@ -49,7 +49,7 @@ class MainViewController: UIViewController {
     }
     
     private func loadData() {
-        self.movieListVM.loadMovieList {
+        movieListVM.loadMovieList {
             self.movieCollectionView.reloadData()
         }
     }

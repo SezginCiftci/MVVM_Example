@@ -11,7 +11,7 @@ import UIKit
 class MovieListViewModel {
     
     private let service = Webservice()
-    public var movies: MovieListModel?
+    var movies: MovieListModel?
     
     public var movieTitles = [String]()
     
